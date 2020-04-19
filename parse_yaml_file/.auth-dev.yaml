@@ -1,0 +1,6 @@
+dev:
+      client_id: "g57UkGrniLUSzTJYU8VYpZRtmnOlf75T"
+      client_secret: "7s-4K_C-rOCHvSD5hS2JRm-QEhZ-E734e-N2wAG3eJQciss46vJrdMXfoqQou0lC"
+      master_token_url : "https://accounts-fuse-ai-dev.auth0.com/oauth/token"
+      master_token_grant_type: "client_credentials"
+      master_token_audience : "https://fuse-ai-dev-api.fusemachines.com/"

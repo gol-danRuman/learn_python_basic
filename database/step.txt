@@ -1,0 +1,19 @@
+Steps:
+
+## RUN mysql in container with same docker network of jupyterhub
+1. docker run --rm --name=testsql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql123 --net jupyterhub -d mysql:5
+## RUN phpmyadmim in container with same docker network of jupyterhub
+2. docker run --name myadmin -d --link testsql:db --net jupyterhub -p 8080:80 phpmyadmin/phpmyadmin(link doesnot work so far)
+## URL of mysql-connector in notebookapp
+3. mysql+mysqlconnector://root:mysql123@172.16.5.194:3306/test_db
+
+
+
+IN CASE tcp 0.0.0.0:3306 bind:address already in use
+1. sudo netstat -nlpt |grep 3306
+2. sudo service mysql stop
+
+
+KILL ALL DOCKER PROCESSES
+1. docker stop $(docker ps -a -q)
+2. docker rm $(docker ps -a -q)

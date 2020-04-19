@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-python-app-deployment
+  labels:
+    app: python-app
+    tier: backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: my-python-hello-app-pod
+      labels:
+        app: my-python-hello-app
+        type: backend-python
+    spec:
+      containers:
+        - name: python-hello
+          image: rumancha12/dockerhubtest:latest
+          ports:
+            - containerPort: 5000
+  selector:
+    matchLabels:
+      app: my-python-hello-app
+      type: backend-python

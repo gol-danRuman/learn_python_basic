@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+
+     function gitPush() {
+        var currentUrlPath = window.location.pathname;
+        var assignment_folder = document.getElementById("mySelect").value;
+        var course_name = document.getElementById("course_name").value;
+<!--        var files = document.querySelector('[type=file]').files;-->
+        console.log(currentUrlPath);
+        console.log(assignment_folder);
+<!--        console.log(files);-->
+        debugger;
+           var data = JSON.stringify({
+              "email": "ruman@fusemchines.com",
+              "assignment_folder" : assignment_folder,
+              "course_name": course_name
+<!--              "files" : files-->
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === 4) {
+                console.log(this.responseText);
+              }
+            });
+
+            xhr.open("POST", "http://localhost:5001/push");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("cache-control", "no-cache");
+
+            xhr.send(data);
+        console.log('My github api hit');
+      }
+    </script>
+    <script type="text/javascript" >
+    function getAssignment(){
+        var url = "http://localhost:5001/getOptions";
+        var id, name;
+        var xhr = new XMLHttpRequest();;
+
+        xhr.onload = function() {
+              // Begin accessing JSON data here
+              data = JSON.parse(this.response);
+              data = data.data;
+               debugger;
+              if (xhr.status >= 200 && xhr.status < 400) {
+                for (var i = 0; i < data.length; i++){
+                    var assignment = data[i];
+                  var element = document.createElement("option");
+                  debugger;
+                  console.log(assignment);
+                  element.innerText = assignment;
+                  var selectElem = document.getElementById("mySelect");
+                  selectElem.append(element)
+                }
+              } else {
+                console.log('error')
+              }
+            }
+        xhr.open("GET", url, true);
+        xhr.send();
+     }
+     window.onload = getAssignment;
+</script>
+
+</head>
+<body>
+
+<div>
+    {{my_string}}
+</div>
+
+<div>
+    <div>Enter Course Name::</div>
+    <textarea id="course_name" placeholder="Enter Course Name"></textarea>
+</div>
+
+<div>
+    <div>Select Assignment Folder::</div>
+    <select  id="mySelect" > </select>
+</div>
+
+
+<!--<textarea id="assignment_folder" placeholder="name of assignment folder"></textarea>-->
+<button onclick="gitPush()" value="PushGithub">PushGithub </button>
+
+</body>
+</html>
